@@ -15,7 +15,9 @@ declare Blur
 declare Provider
 declare Outfile
 declare Category
+declare Scratch
 
+Scratch="$@"
 ########################################################################
 # options
 # -x [#]
@@ -27,32 +29,33 @@ declare Category
 # I should probably use getopt for this
 ########################################################################
 parse_variables() {
-  if [[ "$@" == *"-h "* ]]; then
-		show_help
-    exit 0
-  fi
-	if [[ "$@" == *"-b "* ]]; then
+  echo "$Scratch"
+	if [[ "$Scratch" == *"-b"* ]]; then
     echo "SHIT"
     Blur="/?blur"
   fi
-  if [[ "$@" == *"-c "* ]]; then
-		Category=$(echo "$@" | awk -F "-c " '{print $2}')
+  if [[ "$Scratch" == *"-c "* ]]; then
+		Category=$(echo "$Scratch" | awk -F "-c " '{print $2}')
   fi
-  if [[ "$@" == *"-x "* ]]; then
-		Xpx=$(echo "$@" | awk -F "-x " '{print $2}')
+  if [[ "$Scratch" == *"-x "* ]]; then
+		Xpx=$(echo "$Scratch" | awk -F "-x " '{print $2}')
   fi
-  if [[ "$@" == *"-y "* ]]; then
-    Ypx=$(echo "$@" | awk -F "-y " '{print $2}')
+  if [[ "$Scratch" == *"-y "* ]]; then
+    Ypx=$(echo "$Scratch" | awk -F "-y " '{print $2}')
   fi
-  if [[ "$@" == *"-p "* ]]; then
-    Provider=$(echo "$@" | awk -F "-p " '{print $2}')
+  if [[ "$Scratch" == *"-p "* ]]; then
+    Provider=$(echo "$Scratch" | awk -F "-p " '{print $2}')
   else
     Provider="unsplash"
   fi
-  if [[ "$@" == *"-o "* ]]; then
-    Outfile=$(echo "$@" | awk -F "-o " '{print $2}')
+  if [[ "$Scratch" == *"-o "* ]]; then
+    Outfile=$(echo "$Scratch" | awk -F "-o " '{print $2}')
   else
     Outfile="$PWD/outfile.jpg"
+  fi
+  if [[ "$Scratch" == *"-h="* ]]; then
+		show_help
+    exit 0
   fi
 }
 
