@@ -1,6 +1,6 @@
 # A bash script to fetch placeholder images of the dimensions you specify.
 
-I found (spaceholder)[https://github.com/ecrmnn/spaceholder] to fetch
+I found [spaceholder](https://github.com/ecrmnn/spaceholder) to fetch
 random public domain images, but it required npm, which seemed overkill
 for something this simple.
 
