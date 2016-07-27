@@ -66,11 +66,11 @@ check_variables(){
   declare -i craptastic=0
   case $Xpx in
       ''|*[!0-9]*) craptastic=craptastic+1 ;;
-      *) echo good ;;
+      *)  ;;
   esac
   case $Ypx in
       ''|*[!0-9]*) craptastic=craptastic+1 ;;
-      *) echo good ;;
+      *) ;;
   esac
   # Nobody but unsplash provides blur
   # Unsplash only has random for category
@@ -82,7 +82,7 @@ check_variables(){
     *) craptastic=craptastic+1;;
   esac
   if [ $craptastic -gt 0 ]; then
-    >&2 echo "Variables defined and not parseable"
+    >&2 echo "Variables defined for imgholder but not parseable"
     show_help
     exit 1
   fi
@@ -94,35 +94,33 @@ check_variables(){
 curl_time() {
   declare urlstring
 
-  urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs")
-  echo "$urlstring"
+  urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
+#  echo "$urlstring"
   curl $urlstring
-
-
+  echo "Image written to $Outfile"
 }
 
 ################################################################################
 # Wherein our hero tells the user what's what.
 ################################################################################
 show_help() {
-  echo "help"
-  # -x [#]
-  # -y [#]
-  # -p [placeimg|lorempixel|unsplash]
-  # -o [path]
-  # -b (for blur)
-  # -c [category name]
+  echo "Usage is imgholder.sh with the following *optional* arguments"
+  echo "-x [#]  X resolution of the resulting image (default 512)"
+  echo "-y [#]  Y resolution of the resulting image (default 512)"
+  echo "-p [placeimg|lorempixel|unsplash] Source of image (default unsplash)"
+  echo "-o [path/filename] Complete path of output"
+  echo "-b Engage blur on image (unsplash only)"
+  echo "-c [category] Category of image (placeimg and lorempixel only)"
 }
 
 ################################################################################
 # Wherein things get told to happen
 ################################################################################
-
+main() {
   parse_variables
-  echo "variables parsed"
   check_variables
-  echo "variables checked"
-  echo "running curl"
   curl_time
-  echo "curl ran"
 	exit 0
+}
+
+main
