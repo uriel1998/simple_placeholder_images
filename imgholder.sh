@@ -31,7 +31,6 @@ Scratch="$@"
 parse_variables() {
   echo "$Scratch"
 	if [[ "$Scratch" == *"-b"* ]]; then
-    echo "SHIT"
     Blur="/?blur"
   fi
   if [[ "$Scratch" == *"-c "* ]]; then
@@ -95,7 +94,7 @@ curl_time() {
   declare urlstring
 
   urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
-#  echo "$urlstring"
+  echo "$urlstring"
   curl $urlstring
   echo "Image written to $Outfile"
 }

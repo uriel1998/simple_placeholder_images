@@ -18,7 +18,6 @@ Usage is **imgholder.sh** with the following *optional* arguments
 * -y [#]  Y resolution of the resulting image (default 512)
 * -p [placeimg|lorempixel|unsplash] Source of image (default unsplash)
 * -o [path/filename] Complete path of output
-* -b Engage blur on image (unsplash only)
 * -c [category] Category of image (placeimg and lorempixel only)
 
 ### Examples
