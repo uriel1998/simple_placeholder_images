@@ -22,7 +22,7 @@ Scratch="$@"
 # options
 # -x [#]
 # -y [#]
-# -p [placeimg|lorempixel|unsplash]
+# -p [placeimg|lorempixel|photosum]
 # -o [path]
 # -b (for blur)
 # -c [category name]
@@ -45,7 +45,7 @@ parse_variables() {
   if [[ "$Scratch" == *"-p "* ]]; then
     Provider=$(echo "$Scratch" | awk -F "-p " '{print $2}')
   else
-    Provider="unsplash"
+    Provider="photosum"
   fi
   if [[ "$Scratch" == *"-o "* ]]; then
     Outfile=$(echo "$Scratch" | awk -F "-o " '{print $2}')
@@ -77,7 +77,7 @@ check_variables(){
   case $Provider in
     placeimg) Provider="http://placeimg.com";Blur="";Category="nature";;
     lorempixel) Provider="http://lorempixel.com";Blur="";Category="nature";;
-    unsplash) Provider="http://unsplash.it";Category="?random";;
+    photosum) Provider="http://photosum.photos";Category="?random";;
     *) craptastic=craptastic+1;;
   esac
   if [ $craptastic -gt 0 ]; then
@@ -93,10 +93,17 @@ check_variables(){
 curl_time() {
   declare urlstring
 
-  urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
-  echo "$urlstring"
-  curl $urlstring
-  echo "Image written to $Outfile"
+  if [ "$Provider" == "photosum" ]; then
+    urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -O $Outfile")
+    echo "$urlstring"
+    wget $urlstring
+    echo "Image written to $Outfile"
+  else
+    urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
+    echo "$urlstring"
+    curl $urlstring
+    echo "Image written to $Outfile"
+  fi
 }
 
 ################################################################################
@@ -106,7 +113,7 @@ show_help() {
   echo "Usage is imgholder.sh with the following *optional* arguments"
   echo "-x [#]  X resolution of the resulting image (default 512)"
   echo "-y [#]  Y resolution of the resulting image (default 512)"
-  echo "-p [placeimg|lorempixel|unsplash] Source of image (default unsplash)"
+  echo "-p [placeimg|lorempixel|photosum] Source of image (default unsplash)"
   echo "-o [path/filename] Complete path of output"
   echo "-b Engage blur on image (unsplash only)"
   echo "-c [category] Category of image (placeimg and lorempixel only)"
