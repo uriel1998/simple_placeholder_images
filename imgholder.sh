@@ -22,7 +22,7 @@ Scratch="$@"
 # options
 # -x [#]
 # -y [#]
-# -p [placeimg|lorempixel|photosum]
+# -p [placeimg|lorempixel]
 # -o [path]
 # -b (for blur)
 # -c [category name]
@@ -45,7 +45,7 @@ parse_variables() {
   if [[ "$Scratch" == *"-p "* ]]; then
     Provider=$(echo "$Scratch" | awk -F "-p " '{print $2}')
   else
-    Provider="photosum"
+    Provider="lorempixel"
   fi
   if [[ "$Scratch" == *"-o "* ]]; then
     Outfile=$(echo "$Scratch" | awk -F "-o " '{print $2}')
@@ -77,7 +77,6 @@ check_variables(){
   case $Provider in
     placeimg) Provider="http://placeimg.com";Blur="";Category="nature";;
     lorempixel) Provider="http://lorempixel.com";Blur="";Category="nature";;
-    photosum) Provider="http://photosum.photos";Category="?random";;
     *) craptastic=craptastic+1;;
   esac
   if [ $craptastic -gt 0 ]; then
@@ -92,8 +91,8 @@ check_variables(){
 ################################################################################
 curl_time() {
   declare urlstring
-
-  if [ "$Provider" == "photosum" ]; then
+  echo "$Provider"
+  if [ "$Provider" == "http://lorempixel.com" ]; then
     urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -O $Outfile")
     echo "$urlstring"
     wget $urlstring
