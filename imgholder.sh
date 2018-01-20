@@ -45,7 +45,7 @@ parse_variables() {
   if [[ "$Scratch" == *"-p "* ]]; then
     Provider=$(echo "$Scratch" | awk -F "-p " '{print $2}')
   else
-    Provider="lorempixel"
+    Provider="placeimg"
   fi
   if [[ "$Scratch" == *"-o "* ]]; then
     Outfile=$(echo "$Scratch" | awk -F "-o " '{print $2}')
@@ -75,8 +75,9 @@ check_variables(){
   # Unsplash only has random for category
   # I'm temporarily hardcoding the category strings in.
   case $Provider in
-    placeimg) Provider="http://placeimg.com";Blur="";Category="nature";;
+    placeimg) Provider="http://placeimg.com";Blur="";Category="any";;
     lorempixel) Provider="http://lorempixel.com";Blur="";Category="nature";;
+    picsum) Provider="https://picsum.photos";Blur="";Category="nature";;
     *) craptastic=craptastic+1;;
   esac
   if [ $craptastic -gt 0 ]; then
