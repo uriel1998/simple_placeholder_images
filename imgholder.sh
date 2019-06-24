@@ -16,7 +16,9 @@ declare Outfile
 declare Category
 declare Scratch
 
-Scratch="$@"
+Provider="placeimg"
+Outfile="$PWD/outfile.jpg"
+
 ########################################################################
 # options
 # -x [#]
@@ -26,33 +28,29 @@ Scratch="$@"
 # -c [category name]
 # I should probably use getopt for this
 ########################################################################
-parse_variables() {
-  echo "$Scratch"
-  if [[ "$Scratch" == *"-c "* ]]; then
-		Category=$(echo "$Scratch" | awk -F "-c " '{print $2}')
-  fi
-  if [[ "$Scratch" == *"-x "* ]]; then
-		Xpx=$(echo "$Scratch" | awk -F "-x " '{print $2}')
-  fi
-  if [[ "$Scratch" == *"-y "* ]]; then
-    Ypx=$(echo "$Scratch" | awk -F "-y " '{print $2}')
-  fi
-  if [[ "$Scratch" == *"-p "* ]]; then
-    Provider=$(echo "$Scratch" | awk -F "-p " '{print $2}')
-  else
-    Provider="placeimg"
-  fi
-  if [[ "$Scratch" == *"-o "* ]]; then
-    Outfile=$(echo "$Scratch" | awk -F "-o " '{print $2}')
-  else
-    Outfile="$PWD/outfile.jpg"
-  fi
-  if [[ "$Scratch" == *"-h="* ]]; then
-		show_help
-    exit 0
-  fi
-}
+while [ $# -gt 0 ]; do
+option="$1"
+    case $option
+    in
+    -p) Provider="$2"
+    shift
+    shift ;;
+    -c) Category="$2"
+    shift
+    shift ;;
+    -x) Xpx="$2"
+    shift
+    shift ;;
+    -y) Ypx="$2"
+    shift
+    shift ;;    
+    -o) Outfile=$(readlink -f "$2")
+    shift
+    shift ;;
+    esac
+done
 
+echo "$Outfile"
 ################################################################################
 # Ensuring that either sane defaults are used, or user input is not insane.
 ################################################################################
@@ -126,7 +124,6 @@ show_help() {
 # Wherein things get told to happen
 ################################################################################
 main() {
-  parse_variables
   check_variables
   curl_time
 	exit 0
