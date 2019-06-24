@@ -17,13 +17,13 @@ something like Buffer's *Pablo* service with a little ImgMagick help.
 Usage is **imgholder.sh** with the following *optional* arguments
 * -x [#]  X resolution of the resulting image (default 512)
 * -y [#]  Y resolution of the resulting image (default 512)
-* -p [placeimg|lorempixel|photosum] Source of image (default photosum)
-* -o [path/filename] Complete path of output
+* -p [placeimg|lorempixel|photosum|unsplash] Source of image (default photosum)
+* -o [path/filename] Complete path of output, defaults to output.jpg
 * -c [category] Category of image (placeimg and lorempixel only)
 
 ### Examples
 
-Download an image that is 1024x1024, from unsplash.it, with blur applied.
+Download an image that is 1024x1024, from unsplash, with blur applied.
   imgholder.sh -x 1024 -y 1024 -b
 
 Download an image from placeimg that is of the nature category that's 512x512

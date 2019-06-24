@@ -11,7 +11,6 @@
 ########################################################################
 declare -i Xpx=512
 declare -i Ypx=512
-declare Blur
 declare Provider
 declare Outfile
 declare Category
@@ -22,17 +21,13 @@ Scratch="$@"
 # options
 # -x [#]
 # -y [#]
-# -p [placeimg|lorempixel]
+# -p [placeimg|lorempixel|unsplash|picsum]
 # -o [path]
-# -b (for blur)
 # -c [category name]
 # I should probably use getopt for this
 ########################################################################
 parse_variables() {
   echo "$Scratch"
-	if [[ "$Scratch" == *"-b"* ]]; then
-    Blur="/?blur"
-  fi
   if [[ "$Scratch" == *"-c "* ]]; then
 		Category=$(echo "$Scratch" | awk -F "-c " '{print $2}')
   fi
@@ -71,10 +66,9 @@ check_variables(){
       ''|*[!0-9]*) craptastic=craptastic+1 ;;
       *) ;;
   esac
-  # Nobody but unsplash provides blur
-  # Unsplash only has random for category
   # I'm temporarily hardcoding the category strings in.
   case $Provider in
+    unsplash) Provider="http://source.unsplash.com";Blur="";Category="";;
     placeimg) Provider="http://placeimg.com";Blur="";Category="any";;
     lorempixel) Provider="http://lorempixel.com";Blur="";Category="nature";;
     picsum) Provider="https://picsum.photos";Blur="";Category="nature";;
@@ -98,6 +92,16 @@ curl_time() {
     echo "$urlstring"
     wget $urlstring
     echo "Image written to $Outfile"
+  elif [ "$Provider" == "http://source.unsplash.com" ];then
+    urlstring=$(echo "$Provider/"$Xpx"x"$Ypx" -O $Outfile")
+    echo "$urlstring"
+    wget $urlstring
+    echo "Image written to $Outfile"  
+  elif [ "$Provider" == "https://picsum.photos" ];then
+    urlstring=$(echo "$Provider/"$Xpx"/"$Ypx" -O $Outfile")
+    echo "$urlstring"
+    wget $urlstring
+    echo "Image written to $Outfile"  
   else
     urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
     echo "$urlstring"
@@ -115,7 +119,6 @@ show_help() {
   echo "-y [#]  Y resolution of the resulting image (default 512)"
   echo "-p [placeimg|lorempixel|photosum] Source of image (default unsplash)"
   echo "-o [path/filename] Complete path of output"
-  echo "-b Engage blur on image (unsplash only)"
   echo "-c [category] Category of image (placeimg and lorempixel only)"
 }
 
