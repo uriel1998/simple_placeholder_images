@@ -18,6 +18,13 @@ background, but I realize that this could be used as the base for
 something like Buffer's [Pablo](http://pablo.buffer.com/) service with a 
 little ImgMagick help.
 
+This script can use four different services:
+
+ * [lorempixel](http://lorempixel.com/)  
+ * [Lorem Picsum](https://picsum.photos/)
+ * [Placeimg](https://placeimg.com/)
+ * [Unsplash Source](https://source.unsplash.com)
+
 ## 2. License
 
 This project is licensed under the MIT license. For the full license, see `LICENSE`.
@@ -33,7 +40,7 @@ Usage is `imgholder.sh` with the following *optional* arguments
 
  * -x [#]  X resolution of the resulting image (default 512)  
  * -y [#]  Y resolution of the resulting image (default 512)  
- * -p [placeimg|lorempixel|photosum|unsplash] Source of image (default photosum)  
+ * -p [placeimg|lorempixel|picsum|unsplash] Source of image (default photosum)  
  * -o [path/filename] Complete path of output, defaults to output.jpg  
  * -c [category] Category of image (placeimg and lorempixel only)  
 
