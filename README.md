@@ -40,7 +40,7 @@ Usage is `imgholder.sh` with the following *optional* arguments
 
  * -x [#]  X resolution of the resulting image (default 512)  
  * -y [#]  Y resolution of the resulting image (default 512)  
- * -p [placeimg|lorempixel|picsum|unsplash] Source of image (default photosum)  
+ * -p [placeimg|lorempixel|picsum|unsplash] Source of image (default unsplash)  
  * -o [path/filename] Complete path of output, defaults to output.jpg  
  * -c [category] Category of image (placeimg and lorempixel only)  
 

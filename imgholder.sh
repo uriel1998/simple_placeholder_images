@@ -16,7 +16,7 @@ declare Outfile
 declare Category
 declare Scratch
 
-Provider="placeimg"
+Provider="unsplash"
 Outfile="$PWD/outfile.jpg"
 
 ########################################################################
@@ -115,7 +115,7 @@ show_help() {
   echo "Usage is imgholder.sh with the following *optional* arguments"
   echo "-x [#]  X resolution of the resulting image (default 512)"
   echo "-y [#]  Y resolution of the resulting image (default 512)"
-  echo "-p [placeimg|lorempixel|photosum] Source of image (default unsplash)"
+  echo "-p [placeimg|lorempixel|picsum|unsplash] Source of image (default unsplash)"
   echo "-o [path/filename] Complete path of output"
   echo "-c [category] Category of image (placeimg and lorempixel only)"
 }
