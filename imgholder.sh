@@ -66,9 +66,9 @@ check_variables(){
   esac
   # I'm temporarily hardcoding the category strings in.
   case $Provider in
-    unsplash) Provider="http://source.unsplash.com";Blur="";Category="";;
-    placeimg) Provider="http://placeimg.com";Blur="";Category="any";;
-    lorempixel) Provider="http://lorempixel.com";Blur="";Category="nature";;
+    unsplash) Provider="https://source.unsplash.com";Blur="";Category="";;
+    placeimg) Provider="https://placeimg.com";Blur="";Category="any";;
+    lorempixel) Provider="https://lorempixel.com";Blur="";Category="nature";;
     picsum) Provider="https://picsum.photos";Blur="";Category="nature";;
     *) craptastic=craptastic+1;;
   esac
@@ -84,25 +84,25 @@ check_variables(){
 ################################################################################
 curl_time() {
   declare urlstring
-  echo "$Provider"
+  #echo "$Provider"
   if [ "$Provider" == "http://lorempixel.com" ]; then
     urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -O $Outfile")
-    echo "$urlstring"
+    #echo "$urlstring"
     wget $urlstring
     echo "Image written to $Outfile"
   elif [ "$Provider" == "http://source.unsplash.com" ];then
     urlstring=$(echo "$Provider/"$Xpx"x"$Ypx" -O $Outfile")
-    echo "$urlstring"
+    #echo "$urlstring"
     wget $urlstring
     echo "Image written to $Outfile"  
   elif [ "$Provider" == "https://picsum.photos" ];then
     urlstring=$(echo "$Provider/"$Xpx"/"$Ypx" -O $Outfile")
-    echo "$urlstring"
+    #echo "$urlstring"
     wget $urlstring
     echo "Image written to $Outfile"  
   else
     urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -o $Outfile --max-time 60 --create-dirs -s")
-    echo "$urlstring"
+    #echo "$urlstring"
     curl $urlstring
     echo "Image written to $Outfile"
   fi

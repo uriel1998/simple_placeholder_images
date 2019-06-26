@@ -50,3 +50,7 @@ Download an image that is 1024x1024, from unsplash
 
 Download an image from placeimg that is of the nature category that's 512x512  
   `imgholder -p placeimg -c nature`
+
+## 5. Todo
+
+ * If image not found, put in placeholder image (predesignated or from 
