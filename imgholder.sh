@@ -50,7 +50,7 @@ option="$1"
     esac
 done
 
-echo "$Outfile"
+#echo "$Outfile"
 ################################################################################
 # Ensuring that either sane defaults are used, or user input is not insane.
 ################################################################################
@@ -85,12 +85,12 @@ check_variables(){
 curl_time() {
   declare urlstring
   #echo "$Provider"
-  if [ "$Provider" == "http://lorempixel.com" ]; then
+  if [ "$Provider" == "https://lorempixel.com" ]; then
     urlstring=$(echo "$Provider/$Xpx/$Ypx/$Category$Blur -O $Outfile")
     #echo "$urlstring"
     wget $urlstring
     echo "Image written to $Outfile"
-  elif [ "$Provider" == "http://source.unsplash.com" ];then
+  elif [ "$Provider" == "https://source.unsplash.com" ];then
     urlstring=$(echo "$Provider/"$Xpx"x"$Ypx" -O $Outfile")
     #echo "$urlstring"
     wget $urlstring
